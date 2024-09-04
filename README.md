@@ -52,3 +52,9 @@ DelphiVote is a powerful, flexible Minecraft plugin for vote listening and rewar
 - Visit the [Wiki](https://github.com/obzidi4n/delphivote/wiki/DelphiVote) for complete documentation.
 - For support, visit our [Discord server](https://discord.gg/2BbV34jUDT)
 - Bugs or Feature Requests? Open an issue on [GitHub](https://github.com/obzidi4n/delphivote).
+
+## Support your Devs
+
+[![Buy me a Coffee!](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png 'Buy me a Coffee!')](https://www.buymeacoffee.com/obzidi4n)
+
+Your generous support keeps us motivated and caffeinated!
