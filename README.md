@@ -24,6 +24,12 @@ So why settle for a plain old voting plugin when you can have a vote party with 
 - [NuVotifier](https://github.com/NuVotifier/NuVotifier)
 - [HeadDatabase](https://www.spigotmc.org/resources/head-database.14280/) (optional, for custom head rewards)
 
+### Support
+
+* Visit the [Wiki](https://github.com/obzidi4n/delphivote/wiki) for complete documentation and reward recipes.
+* For live support, visit our [Discord](https://discord.gg/2BbV34jUDT) or open an issue on [GitHub](https://github.com/obzidi4n/delphivote).
+* Try it out first on Delphicraft - [playdelphi.com](https://playdelphi.com)
+
 ## Installation
 
 1. Place the DelphiVote.jar file in your server's `plugins` folder.
@@ -55,13 +61,6 @@ So why settle for a plain old voting plugin when you can have a vote party with 
 - `/vote reload`: Reload plugin configuration (admin only)
 - `/vote give vote <player>`: Give a player vote (admin only)
 - `/vote give reward <player>`: Give a vote reward (admin only)
-
-
-## Support
-
-- Visit the [Wiki](https://github.com/obzidi4n/delphivote/wiki/DelphiVote) for complete documentation.
-- For support, visit our [Discord server](https://discord.gg/2BbV34jUDT)
-- Bugs or Feature Requests? Open an issue on [GitHub](https://github.com/obzidi4n/delphivote).
 
 ## Support your Devs
 
