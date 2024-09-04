@@ -1,0 +1,32 @@
+# ================================================================
+#   🏆 DelphiVote 🏆
+# 
+#   Crafted with ❤️ by Obzidi4n
+#
+#   🔌 SpigotMC: https://www.spigotmc.org/resources/delphivote.12345/
+#   🌟 GitHub: https://github.com/obzidi4n/delphivote
+#   💬 Discord: https://discord.gg/2BbV34jUDT
+#   🏠 Home Server: Delphicraft (playdelphi.com)
+#   
+#   Reward Format:
+#
+#   
+#   reward_id:                  (required, string with underscores, must be unique. Corresponds to triggers.yml trigger_rewards list items)
+#     reward_name:              (required, string)
+#     reward_items:             (required, list of items to give)
+#       - item:                 (required, valid minecraft item name or Head Database ID starting with 'hdb-')
+#         quantity:             (required, integer greater than 0)
+#         title:                (optional, string)
+#         lore:                 (optional, list of strings)
+#         commands:             (optional, list of console commands to execute when the item is given, can use {player} placeholder for the player's name)
+#    reward_randomized:         (optional, true/false, default is false. If true, the items will be randomized)
+#    reward_max_items:          (optional, integer, default 0 grants all items. Use in conjunction with reward_randomized to create variety of rewards)
+#
+#   Available placeholders:
+#
+#      {player} - The name of the player who voted
+#   
+#   Be sure to enclose strings in quotes ('') if they contain special formatting codes such as & or hex colors.
+#
+# ================================================================
+#
