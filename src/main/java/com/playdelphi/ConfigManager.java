@@ -39,6 +39,7 @@ public class ConfigManager {
         loadConfig("sites", "sites.yml");
         loadConfig("reward_items", "reward_items.yml");
         loadConfig("reward_triggers", "reward_triggers.yml");
+        loadConfig("example_sites", "examples/sites.yml");
         loadConfig("example_reward_items", "examples/reward_items.yml");
         loadConfig("example_reward_triggers", "examples/reward_triggers.yml");
 

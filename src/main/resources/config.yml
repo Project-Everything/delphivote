@@ -22,7 +22,6 @@
 #   language:           (required, string,language file to use, see languages folder)
 #
 # ================================================================
-#
 database: 
   type: sqlite 
   host: localhost

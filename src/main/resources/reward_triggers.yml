@@ -1,43 +1,53 @@
 # ================================================================
-#   🏆 DelphiVote 🏆
+# 🏆 DelphiVote 🏆
 # 
-#   Crafted with ❤️ by Obzidi4n
+# Crafted with ❤️ by Obzidi4n
 #
-#   🔌 SpigotMC: https://www.spigotmc.org/resources/delphivote.12345/
-#   🌟 GitHub: https://github.com/obzidi4n/delphivote
-#   💬 Discord: https://discord.gg/2BbV34jUDT
-#   🏠 Home Server: Delphicraft (playdelphi.com)
-#   
-#   Trigger Configuration:
+# 🔌 SpigotMC: https://www.spigotmc.org/resources/delphivote.119390/
+# 🌟 GitHub: https://github.com/obzidi4n/delphivote
+# 💬 Discord: https://discord.gg/2BbV34jUDT
+# 🏠 Home Server: Delphicraft - playdelphi.com
+# 
+# Trigger Configuration:
 #
-#   trigger_id:                  (required, string with underscores, must be unique)
-#    trigger_name:               (required, string)
-#    trigger_user:               (required, string, must be 'player' or 'server'. Defines who fires the trigger)
-#    trigger_threshold:          (required, integer, default is 0. The number of votes required to fire the trigger. Default = trigger fires on every vote.)
-#    trigger_repeat:             (required, true/false, default is true. Should the trigger fire every time trigger_threshold is met.)
-#    trigger_rewards:            (required, list of rewards to give)  
-#      - reward_id:              (required, string with underscores, corresponds to reward_id in rewards.yml)
-#        reward_id:              (another rewards item, add as many as you want)
-#    trigger_player_message:     (optional, string, message to send to the player who voted)
-#    trigger_broadcast_message:  (optional, string, message to send to all players)
+# trigger_id:                  (required, string with underscores, must be unique)
+#   trigger_name:               (required, string)
+#   trigger_user:               (required, string, must be 'player' or 'server'. Defines who receives the rewards)
+#   trigger_threshold:          (required, integer. Number of votes required to fire the trigger. 0 = fires on every vote.)
+#   trigger_repeat:             (required, true/false. Should the trigger fire every time trigger_threshold is met.)
+#   trigger_rewards:             
+#   - reward_id:                (required, corresponds to any item from reward_items.yml)
+#     reward_id:                (another item from reward_items.yml, add as many as you want)
+#   trigger_player_message:     (optional, string, message to send to the player who voted)
+#   trigger_broadcast_message:  (optional, string, message to send to all players)
 #
-#   Available placeholders for trigger messages:
+# Available placeholders for trigger messages:
 #
-#     {player} - The name of the player who voted
-#     {votes} - The total number of votes for the player
-#     {service} - The name of the voting service
+#   {player} - The name of the player who voted
+#   {votes} - The total number of votes for the player
+#   {service} - The name of the voting service
 #
-#  example_trigger:
-#    trigger_name: "Example Trigger"
-#    trigger_user: "player"
-#    trigger_threshold: 0
-#    trigger_repeat: true
-#    trigger_rewards:
-#      - example_reward
-#    trigger_player_message: "&aThanks for voting on {service}, {player}! You now have {votes} votes."
-#    trigger_broadcast_message: "&b{player} just voted on {service} and now has {votes} votes!"
+# Be sure to enclose strings in quotes ("") if they contain special formatting codes such as & or hex colors.
 #
-#   Be sure to enclose strings in quotes ("") if they contain special formatting codes such as & or hex colors.
+# Example Triggers:
+# 
+# player_vote:
+#   trigger_name: Standard Player Vote
+#   trigger_user: player
+#   trigger_threshold: 0
+#   trigger_repeat: true
+#   trigger_rewards:
+#   - diamond_pack
+#   trigger_player_message: '&aThanks for voting, {player}! You now have {votes} votes.'
+#   trigger_broadcast_message: '&b{player} just voted on {service} and now has {votes} votes!'
+# server_milestone_100:
+#   trigger_name: Server 100-Vote Milestone
+#   trigger_user: server
+#   trigger_threshold: 100
+#   trigger_repeat: true
+#   trigger_rewards:
+#   - server_celebration_pack
+#   trigger_player_message: '&aYou''ve received a Server Celebration reward!'
+#   trigger_broadcast_message: '&aThe server has received another 100 votes! Time to celebrate!'
 #
 # ================================================================
-#
