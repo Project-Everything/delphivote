@@ -1,54 +1,52 @@
-# DelphiVoting
+# DelphiVote
 
-DelphiVoting is a powerful and flexible Minecraft plugin for managing voting rewards and interactions. It integrates with NuVotifier to process votes and provides a customizable reward system.
+DelphiVote is a powerful, flexible Minecraft plugin for vote listening and reward management. It integrates with NuVotifier to handle player votes and provides a simple system for configuring and distributing rewards.
 
 ## Features
 
-- Integrates with NuVotifier for vote processing
-- Customizable voting sites and rewards
-- Multi-language support
-- Clickable voting links in-game
-- Configurable vote triggers and actions
+- Vote tracking and management
+- Customizable reward system
+- Trigger-based reward distribution
+- Support for both SQLite and MySQL databases
+- Multi-language support (English, Spanish and Portuguese out of the box)
+- Integration with HeadDatabase for custom head rewards
+- Offline vote and reward handling
 
-## Dependencies
+## Requirements
 
-- [NuVotifier](https://github.com/NuVotifier/NuVotifier): Required for receiving votes from voting sites
+- Spigot/Paper 1.21.1+
+- [NuVotifier](https://github.com/NuVotifier/NuVotifier)
+- HeadDatabase (optional, for custom head rewards)
 
 ## Installation
 
-1. Ensure you have NuVotifier installed and configured on your server
-2. Download the latest DelphiVoting.jar from the releases page
-3. Place the jar file in your server's `plugins` folder
-4. Restart your server or load the plugin
-5. Configure the plugin settings in the generated config files
+1. Place the DelphiVote.jar file in your server's `plugins` folder.
+2. Restart your server to generate configuration files.
+3. Configure the plugin in `config.yml`, `reward_items.yml`, and `reward_triggers.yml`.
+4. Restart your server.
 
 ## Configuration
 
-DelphiVoting uses several YAML configuration files:
-
-- `config.yml`: Main configuration file
-- `messages-<language>.yml`: Language-specific messages
-- `triggers.yml`: Define vote triggers and actions
-- `rewards.yml`: Configure rewards for voting
-- `sites.yml`: Set up voting sites
+- `config.yml`: Main plugin settings
+- `sites.yml`: Voting site configurations
+- `reward_items.yml`: Define reward items
+- `reward_triggers.yml`: Set up reward triggers
+- `lang/messages-xx.yml`: Language files
 
 ## Commands
 
-- `/vote`: List all active voting sites with clickable links
-- `/vote <site>`: Get a specific voting site link
-- `/dv reload`: Reload the plugin configuration
-- `/dv info`: Display plugin information
-- `/dv stats`: View voting statistics
+- `/vote`: Main command for players to see voting sites
+- `/vote help`: Show available commands
+- `/vote stats [player]`: View voting statistics
+- `/vote reload`: Reload plugin configuration (admin only)
+- `/vote give vote <player>`: Give a player vote (admin only)
+- `/vote give reward <player>`: Give a vote reward (admin only)
 
 ## Permissions
 
-- `delphivoting.admin`: Access to all admin commands
-- `delphivoting.stats`: Ability to view voting statistics
+- `delphivote.player`: Access to basic voting commands
+- `delphivote.admin`: Access to all admin commands (inherits `delphivote.player`)
 
 ## Support
 
-For issues, feature requests, or general questions, please open an issue on this repo.
-
----
-
-Crafted with ❤️ by Obzidi4n
+For support, visit our [Discord server](https://discord.gg/2BbV34jUDT) or open an issue on [GitHub](https://github.com/obzidi4n/delphivote).
