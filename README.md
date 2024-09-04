@@ -21,7 +21,7 @@ So why settle for a plain old voting plugin when you can have a vote party with 
 ## Requirements
 
 - Spigot/Paper 1.21.1+
-- [NuVotifier](https://github.com/NuVotifier/NuVotifier)
+- [NuVotifier](https://www.spigotmc.org/resources/nuvotifier.13449/)
 - [HeadDatabase](https://www.spigotmc.org/resources/head-database.14280/) (optional, for custom head rewards)
 
 ### Support
