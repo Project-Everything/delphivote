@@ -140,74 +140,32 @@ public class YamlManager {
             builder.append(entry.getKey()).append(": ");
             
             Object value = entry.getValue();
-
-            // Handle nested maps
             if (value instanceof Map) {
+                // Handle nested maps
                 builder.append("\n");
                 @SuppressWarnings("unchecked")
                 Map<String, Object> nestedMap = (Map<String, Object>) value;
                 writeMapToYaml(nestedMap, builder, indent + 2);
-            } 
-            // Handle lists/collections
-            else if (value instanceof Collection<?>) {
+            } else if (value instanceof Collection<?>) {
+                // Handle lists/collections
                 builder.append("\n");
                 for (Object item : (Collection<?>) value) {
                     builder.append(" ".repeat(indent + 2)).append("- ");
-                    
-                    // Handle maps within lists
                     if (item instanceof Map) {
+                        // Handle maps within lists - using indent+2 instead of indent+4
                         @SuppressWarnings("unchecked")
                         Map<String, Object> mapItem = (Map<String, Object>) item;
-                        // Write the first key-value pair on the same line as the dash
-                        String firstKey = mapItem.keySet().iterator().next();
-                        Object firstValue = mapItem.get(firstKey);
-                        builder.append(firstKey).append(": ");
-                        if (firstValue instanceof Map || firstValue instanceof Collection) {
-                            builder.append("\n");
-                            writeValue(firstValue, builder, indent + 4);
-                        } else {
-                            builder.append(formatValue(firstValue != null ? firstValue.toString() : "")).append("\n");
-                        }
-                        
-                        // Write the rest of the map entries with proper indentation
-                        mapItem.entrySet().stream().skip(1).forEach(e -> {
-                            builder.append(" ".repeat(indent + 4))
-                                  .append(e.getKey())
-                                  .append(": ");
-                            if (e.getValue() instanceof Map || e.getValue() instanceof Collection) {
-                                builder.append("\n");
-                                writeValue(e.getValue(), builder, indent + 6);
-                            } else {
-                                builder.append(formatValue(e.getValue() != null ? e.getValue().toString() : ""))
-                                      .append("\n");
-                            }
-                        });
-                    } 
-                    // Handle simple list items
-                    else {
+                        writeMapToYaml(mapItem, builder, indent + 2);
+                    } else {
+                        // Handle simple list items
                         String itemStr = formatValue(item != null ? item.toString() : "");
                         builder.append(itemStr).append("\n");
                     }
                 }
-            } 
-            // Handle string values
-            else {    
+            } else {
+                // Handle string values
                 String stringValue = formatValue(value != null ? value.toString() : "");
                 builder.append(stringValue).append("\n");
-            }
-        }
-    }
-
-    private void writeValue(Object value, StringBuilder builder, int indent) {
-        if (value instanceof Map) {
-            @SuppressWarnings("unchecked")
-            Map<String, Object> mapValue = (Map<String, Object>) value;
-            writeMapToYaml(mapValue, builder, indent);
-        } else if (value instanceof Collection) {
-            for (Object item : (Collection<?>) value) {
-                builder.append(" ".repeat(indent)).append("- ")
-                      .append(formatValue(item != null ? item.toString() : ""))
-                      .append("\n");
             }
         }
     }

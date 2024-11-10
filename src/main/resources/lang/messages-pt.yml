@@ -21,7 +21,6 @@
 #   Certifique-se de colocar as strings entre aspas ('') se elas contiverem códigos de formatação especiais como & ou cores hex.
 #
 # ================================================================
-#
 addplayer_not_found: "&cJogador {player} não encontrado."
 addplayer_success: "&aJogador {player} foi adicionado ao banco de dados."
 addplayer_usage: "&cUso: /vote addplayer <nomeDoJogador>"
@@ -55,7 +54,7 @@ plugin_info_author: "&bAutor: &a{author}"
 plugin_info_name: "&bNome: &a{name}"
 plugin_info_url: "&bSite: &a{url}"
 plugin_info_version: "&bVersão: &a{version}"
-plugin_info_url_hover: "Clique para visitar a página do plugin!"
+plugin_info_url_hover: Clique para visitar a página do plugin!
 plugin_info_footer: "\n"
 plugin_reload_false: "&aDelphiVote não foi recarregado com sucesso."
 plugin_reload_true: "&aConfiguração do DelphiVote recarregada com sucesso."
@@ -75,7 +74,7 @@ trigger_list_footer: "\n"
 vote_site_header: "\n&6===== Sites de Votação =====&r"
 vote_site_first_item: "&6Clique em um site para votar!"
 vote_site_entry: "&e➤ &b{site_name}"
-vote_site_hover: "Clique para votar!"
+vote_site_hover: Clique para votar!
 vote_site_not_found: "&cSite de votação &e{site_name}&c não encontrado."
 vote_site_redirect: "&6Abrindo página de votação para &e{site_name}&6..."
 vote_site_footer: "\n"

@@ -21,7 +21,6 @@
 #   Be sure to enclose strings in quotes ('') if they contain special formatting codes such as & or hex colors.
 #
 # ================================================================
-#
 addplayer_not_found: "&cPlayer {player} not found."
 addplayer_success: "&aPlayer {player} has been added to the database."
 addplayer_usage: "&cUsage: /vote addplayer <playerName>"
@@ -55,7 +54,7 @@ plugin_info_author: "&bAuthor: &a{author}"
 plugin_info_name: "&bName: &a{name}"
 plugin_info_url: "&bWebsite: &a{url}"
 plugin_info_version: "&bVersion: &a{version}"
-plugin_info_url_hover: "Click to visit the plugin page!"
+plugin_info_url_hover: "&aClick to visit the plugin page!"
 plugin_info_footer: "\n"
 plugin_reload_false: "&aDelphiVote did not reload successfully."
 plugin_reload_true: "&aDelphiVote configuration reloaded successfully."
@@ -75,7 +74,7 @@ trigger_list_footer: "\n"
 vote_site_header: "\n&6===== Voting Sites =====&r"
 vote_site_first_item: "&6Click on a site to vote!"
 vote_site_entry: "&e➤ &b{site_name}"
-vote_site_hover: "Click to vote!"
+vote_site_hover: Click to vote!
 vote_site_not_found: "&cVoting site &e{site_name}&c not found."
 vote_site_redirect: "&6Opening voting page for &e{site_name}&6..."
 vote_site_footer: "\n"

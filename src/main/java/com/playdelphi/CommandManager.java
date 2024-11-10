@@ -9,7 +9,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -111,96 +111,137 @@ public class CommandManager implements CommandExecutor {
         }
     }
 
+    
+    // method overload
+    private boolean checkPerm(PlayerEnv playerEnv, String minPerm) {
+        return checkPerm(playerEnv, minPerm, false);
+    }
+
+    private boolean checkPerm(PlayerEnv playerEnv, String minPerm, boolean failAlert) {
+        String fullPerm = "delphivoting." + minPerm;
+
+        if (minPerm == "admin") {
+            if (playerEnv.player.hasPermission(fullPerm)) {
+                return true;
+            } else {
+                if (failAlert){
+                    playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
+                }
+                return false;
+            }
+        } 
+        
+        else if (minPerm == "player") {
+            if (playerEnv.player.hasPermission(fullPerm) || playerEnv.player.hasPermission("delphivoting.admin")) {
+                return true;
+            } else {
+                if (failAlert) {
+                    playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
+                }
+                return false;
+            }
+        } 
+
+        return false;
+    }
+
     private boolean handleAddPlayer(PlayerEnv playerEnv, String[] args) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
 
-        if (args.length != 2) {
-            playerEnv.player.sendMessage(languageManager.getMessage("addplayer_usage"));
-            return false;
-        }
+        if (checkPerm(playerEnv, "admin")) {
 
-        // Get target PlayerEnv
-        String tgt_playerName = args[1];
-        PlayerEnv tgt_playerEnv = playerEnvManager.getPlayerEnv(tgt_playerName);
+            if (args.length != 2) {
+                playerEnv.player.sendMessage(languageManager.getMessage("addplayer_usage"));
+                return false;
+            }
 
-        // Add player to database
-        databaseManager.addOrUpdatePlayer(tgt_playerEnv);
-        playerEnv.player.sendMessage(languageManager.getMessage("addplayer_success", Map.of("player", tgt_playerEnv.name)));
-        return true;
+            // Get target PlayerEnv
+            String tgt_playerName = args[1];
+            PlayerEnv tgt_playerEnv = playerEnvManager.getPlayerEnv(tgt_playerName);
+
+            // Add player to database
+            databaseManager.addOrUpdatePlayer(tgt_playerEnv);
+            playerEnv.player.sendMessage(languageManager.getMessage("addplayer_success", Map.of("player", tgt_playerEnv.name)));
+            return true;
+
+        } 
+
+        else {return false;}
     }
 
     private boolean handleGiveReward(PlayerEnv playerEnv, String[] args) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
 
-        String tgt_playerName;
-        String rewardName;
+        if (checkPerm(playerEnv, "admin")) {
+    
+            String tgt_playerName;
+            String rewardName;
+    
+            // Parse arguments
+            if (args.length > 3) {
+                rewardName = args[2];
+                tgt_playerName = args[3];
+            } else {
+                playerEnv.player.sendMessage(languageManager.getMessage("admin_trigger_fail"));
+                return false;
+            }
+    
+            // Get target PlayerEnv
+            PlayerEnv tgt_playerEnv = playerEnvManager.getPlayerEnv(tgt_playerName);
+    
+            // Process rewards
+            rewardManager.handleRewards(playerEnv, tgt_playerEnv, "Admin", rewardName);
+            return true;   
 
-        // Parse arguments
-        if (args.length > 3) {
-            rewardName = args[2];
-            tgt_playerName = args[3];
-        } else {
-            playerEnv.player.sendMessage(languageManager.getMessage("admin_trigger_fail"));
-            return false;
-        }
-
-        // Get target PlayerEnv
-        PlayerEnv tgt_playerEnv = playerEnvManager.getPlayerEnv(tgt_playerName);
-
-        // Process rewards
-        rewardManager.handleRewards(playerEnv, tgt_playerEnv, "Admin", rewardName);
-        return true;       
+        } 
+        else {return false;}
     }
 
+
     private boolean handleGiveVote(PlayerEnv playerEnv, String[] args) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
 
-        // Get target playerEnv
-        String tgt_playerName;
+        if (checkPerm(playerEnv, "admin")) {
 
-         // Parse arguments
-        if (args.length > 2) {
-            tgt_playerName = args[2];
-        } else {
-            playerEnv.player.sendMessage(languageManager.getMessage("give_vote_fail"));
-            return false;
-        }
-        
-        PlayerEnv tgt_playerEnv = playerEnvManager.getPlayerEnv(tgt_playerName);
+            // Get target playerEnv
+            String tgt_playerName;
 
-        // Process vote
-        voteManager.handleVote(playerEnv, tgt_playerEnv, "Admin");
-        return true;
+            // Parse arguments
+            if (args.length > 2) {
+                tgt_playerName = args[2];
+            } else {
+                playerEnv.player.sendMessage(languageManager.getMessage("give_vote_fail"));
+                return false;
+            }
+            
+            PlayerEnv tgt_playerEnv = playerEnvManager.getPlayerEnv(tgt_playerName);
+
+            // Process vote
+            voteManager.handleVote(playerEnv, tgt_playerEnv, "Admin");
+            return true;
+
+        } 
+        else {return false;}
     }
 
     private boolean handleExpireRewards(PlayerEnv playerEnv) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
-        rewardManager.expireRewards();
-        return true;
+
+        if (checkPerm(playerEnv, "admin")) {
+
+            rewardManager.expireRewards();
+            return true;
+
+        } 
+        else {return false;}
     }
 
     private boolean handleHelp(PlayerEnv playerEnv) {
         playerEnv.player.sendMessage(languageManager.getMessage("help_header"));
 
-        if (playerEnv.player.hasPermission("delphivoting.player")) {
+        if (checkPerm(playerEnv, "player")) {
             playerEnv.player.sendMessage(languageManager.getMessage("help_vote"));
             playerEnv.player.sendMessage(languageManager.getMessage("help_stats"));
             playerEnv.player.sendMessage(languageManager.getMessage("help_stats_player"));
         }
 
-        if (playerEnv.player.hasPermission("delphivoting.admin")) {
+        if (checkPerm(playerEnv, "admin")) {
             playerEnv.player.sendMessage(languageManager.getMessage("help_info"));
             playerEnv.player.sendMessage(languageManager.getMessage("help_list_rewards"));
             playerEnv.player.sendMessage(languageManager.getMessage("help_give_reward"));
@@ -214,150 +255,157 @@ public class CommandManager implements CommandExecutor {
     }
 
     private boolean handleInfo(PlayerEnv playerEnv) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
 
-        String pluginUrl = plugin.getDescription().getWebsite();
-        TextComponent urlMessage = new TextComponent(languageManager.getMessage("plugin_info_url", Map.of("url", pluginUrl)));
-        urlMessage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, pluginUrl));
-        urlMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(languageManager.getMessage("plugin_info_url_hover")).create()));
+        if (checkPerm(playerEnv, "admin")) {
 
-        playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_header"));
-        playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_name", Map.of("name", plugin.getDescription().getName())));
-        playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_version", Map.of("version", plugin.getDescription().getVersion())));
-        playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_author", Map.of("author", String.join(", ", plugin.getDescription().getAuthors()))));
-        playerEnv.player.spigot().sendMessage(urlMessage);
-        playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_footer"));
-        return true;
+            String pluginUrl = plugin.getDescription().getWebsite();
+            TextComponent urlMessage = new TextComponent(languageManager.getMessage("plugin_info_url", Map.of("url", pluginUrl)));
+            urlMessage.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, pluginUrl));
+            // urlMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(languageManager.getMessage("plugin_info_url_hover")).create()));
+
+            urlMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(languageManager.getMessage("plugin_info_url_hover"))));
+
+            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_header"));
+            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_name", Map.of("name", plugin.getDescription().getName())));
+            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_version", Map.of("version", plugin.getDescription().getVersion())));
+            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_author", Map.of("author", String.join(", ", plugin.getDescription().getAuthors()))));
+            playerEnv.player.spigot().sendMessage(urlMessage);
+            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_footer"));
+            return true;
+
+        } 
+        else {return false;}
     }
 
     private boolean handleListPlayerEnvs(PlayerEnv playerEnv) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
-        playerEnvManager.listActivePlayerEnvs();
-        return true;
+
+        if (checkPerm(playerEnv, "admin")) {
+
+            playerEnvManager.listActivePlayerEnvs();
+            return true;
+        } 
+        else {return false;}
     }
 
     private boolean handleListPlayers(PlayerEnv playerEnv) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
 
-        List<UUID> allPlayers = databaseManager.getAllPlayersUUID();
-        logger.info("All Player UUIDs: " + allPlayers.toString());
-        return true;
+        if (checkPerm(playerEnv, "admin")) {
+    
+            List<UUID> allPlayers = databaseManager.getAllPlayersUUID();
+            logger.info("All Player UUIDs: " + allPlayers.toString());
+            return true;
+        } 
+        else {return false;}
     }
 
     private boolean handleListRewards(PlayerEnv playerEnv) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
-        rewardManager.listRewards(playerEnv);
-        return true;
+
+        if (checkPerm(playerEnv, "admin")) {
+
+            rewardManager.listRewards(playerEnv);
+            return true;
+
+        } 
+        else {return false;}
     }
 
     private boolean handleListTriggers(PlayerEnv playerEnv) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
-        rewardManager.listTriggers(playerEnv);
-        return true;
+
+        if (checkPerm(playerEnv, "admin")) {
+
+            rewardManager.listTriggers(playerEnv);
+            return true;
+        } 
+        else {return false;}
     }
 
     private boolean handleReload(PlayerEnv playerEnv) {
-        if (!playerEnv.player.hasPermission("delphivoting.admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
 
-        plugin.reloadConfig();
-        configManager.loadConfigs();
-        languageManager.loadLanguageConfigs();
-        playerEnv.player.sendMessage(languageManager.getMessage("plugin_reload_true"));
-        return true;
+        if (checkPerm(playerEnv, "admin")) {
+    
+            plugin.reloadConfig();
+            configManager.loadConfigs();
+            languageManager.loadLanguageConfigs();
+            playerEnv.player.sendMessage(languageManager.getMessage("plugin_reload_true"));
+            return true;
+        } 
+        else {return false;}
     }
 
     private boolean handleStats(PlayerEnv playerEnv, String[] args) {
-        if (!playerEnv.player.hasPermission("delphivoting.player")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
 
-        if (args.length == 1) {
-            playerEnv.player.sendMessage(languageManager.getMessage("top_voters_header"));
-
-            // total vote count message
-            int totalVotes = databaseManager.getServerVoteCount();
-            playerEnv.player.sendMessage(languageManager.getMessage("total_server_votes", Map.of("total_votes", String.valueOf(totalVotes))));
-
-            // top 10 voters
-            List<Map.Entry<String, Integer>> topVoters = databaseManager.getTopVoters(10);
-            int rank = 1;
-            for (Map.Entry<String, Integer> entry : topVoters) {
-                playerEnv.player.sendMessage(languageManager.getMessage("top_voter_item", Map.of("rank", String.valueOf(rank), "player", entry.getKey(), "votes", String.valueOf(entry.getValue()))));
-                rank++;
-            }
-            playerEnv.player.sendMessage(languageManager.getMessage("top_voters_last_item"));
-            playerEnv.player.sendMessage(languageManager.getMessage("top_voters_footer"));
-        } else {
-            // Show stats for a specific player
-            String tgt_playerName = args[1];
-
-            // Get target PlayerEnv
-            PlayerEnv tgt_playerEnv = playerEnvManager.getPlayerEnv(tgt_playerName);
-
-            Map<String, Object> playerStats = databaseManager.getPlayerVoteStats(tgt_playerEnv);
-            if (playerStats != null) {
-                playerEnv.player.sendMessage(languageManager.getMessage("player_stats_header", Map.of("player", tgt_playerEnv.name)));
-                playerEnv.player.sendMessage(languageManager.getMessage("player_stats_votes", Map.of("votes", String.valueOf(playerStats.get("totalVotes")))));
-                if (playerStats.get("lastVoteDate") != null) {
-                    playerEnv.player.sendMessage(languageManager.getMessage("player_stats_last_vote", Map.of("last_vote", String.valueOf(playerStats.get("lastVoteDate")))));
+        if (checkPerm(playerEnv, "player")) {
+    
+            if (args.length == 1) {
+                playerEnv.player.sendMessage(languageManager.getMessage("top_voters_header"));
+    
+                // total vote count message
+                int totalVotes = databaseManager.getServerVoteCount();
+                playerEnv.player.sendMessage(languageManager.getMessage("total_server_votes", Map.of("total_votes", String.valueOf(totalVotes))));
+    
+                // top 10 voters
+                List<Map.Entry<String, Integer>> topVoters = databaseManager.getTopVoters(10);
+                int rank = 1;
+                for (Map.Entry<String, Integer> entry : topVoters) {
+                    playerEnv.player.sendMessage(languageManager.getMessage("top_voter_item", Map.of("rank", String.valueOf(rank), "player", entry.getKey(), "votes", String.valueOf(entry.getValue()))));
+                    rank++;
                 }
+                playerEnv.player.sendMessage(languageManager.getMessage("top_voters_last_item"));
+                playerEnv.player.sendMessage(languageManager.getMessage("top_voters_footer"));
             } else {
-                playerEnv.player.sendMessage(languageManager.getMessage("player_not_found", Map.of("player", tgt_playerEnv.name)));
+                // Show stats for a specific player
+                String tgt_playerName = args[1];
+    
+                // Get target PlayerEnv
+                PlayerEnv tgt_playerEnv = playerEnvManager.getPlayerEnv(tgt_playerName);
+    
+                Map<String, Object> playerStats = databaseManager.getPlayerVoteStats(tgt_playerEnv);
+                if (playerStats != null) {
+                    playerEnv.player.sendMessage(languageManager.getMessage("player_stats_header", Map.of("player", tgt_playerEnv.name)));
+                    playerEnv.player.sendMessage(languageManager.getMessage("player_stats_votes", Map.of("votes", String.valueOf(playerStats.get("totalVotes")))));
+                    if (playerStats.get("lastVoteDate") != null) {
+                        playerEnv.player.sendMessage(languageManager.getMessage("player_stats_last_vote", Map.of("last_vote", String.valueOf(playerStats.get("lastVoteDate")))));
+                    }
+                } else {
+                    playerEnv.player.sendMessage(languageManager.getMessage("player_not_found", Map.of("player", tgt_playerEnv.name)));
+                }
+                playerEnv.player.sendMessage(languageManager.getMessage("player_stats_footer"));
             }
-            playerEnv.player.sendMessage(languageManager.getMessage("player_stats_footer"));
-        }
-        return true;
+            return true;
+        } 
+        else {return false;}
     }
 
     private boolean handleVoteList(PlayerEnv playerEnv) {
-        if (!playerEnv.player.hasPermission("delphivoting.player")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
-            return false;
-        }
 
-        playerEnv.player.sendMessage(languageManager.getMessage("vote_site_header"));
-        playerEnv.player.sendMessage(languageManager.getMessage("vote_site_first_item"));
-
-        ConfigurationSection sitesConfig = configManager.getConfig("sites");
-        if (sitesConfig == null || sitesConfig.getKeys(false).isEmpty()) {
-            playerEnv.player.sendMessage(languageManager.getMessage("no_vote_sites"));
-            return false;
-        }
-
-        for (String siteKey : sitesConfig.getKeys(false)) {
-            ConfigurationSection siteSection = sitesConfig.getConfigurationSection(siteKey);
-            if (siteSection != null && siteSection.getBoolean("site_active", true)) {
-                String siteName = siteSection.getString("site_name", "Unknown");
-                String siteUrl = siteSection.getString("site_vote_url", "");
-
-                TextComponent message = new TextComponent(languageManager.getMessage("vote_site_entry", Map.of("site_name", siteName)));
-                message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, siteUrl));
-                message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(languageManager.getMessage("vote_site_hover")).create()));
-
-                playerEnv.player.spigot().sendMessage(message);
+        if (checkPerm(playerEnv, "player")) {
+    
+            playerEnv.player.sendMessage(languageManager.getMessage("vote_site_header"));
+            playerEnv.player.sendMessage(languageManager.getMessage("vote_site_first_item"));
+    
+            ConfigurationSection sitesConfig = configManager.getConfig("sites");
+            if (sitesConfig == null || sitesConfig.getKeys(false).isEmpty()) {
+                playerEnv.player.sendMessage(languageManager.getMessage("no_vote_sites"));
+                return false;
             }
-        }
-
-        playerEnv.player.sendMessage(languageManager.getMessage("vote_site_footer"));
-        return true;
+    
+            for (String siteKey : sitesConfig.getKeys(false)) {
+                ConfigurationSection siteSection = sitesConfig.getConfigurationSection(siteKey);
+                if (siteSection != null && siteSection.getBoolean("site_active", true)) {
+                    String siteName = siteSection.getString("site_name", "Unknown");
+                    String siteUrl = siteSection.getString("site_vote_url", "");
+    
+                    TextComponent message = new TextComponent(languageManager.getMessage("vote_site_entry", Map.of("site_name", siteName)));
+                    message.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, siteUrl));
+                    message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(languageManager.getMessage("vote_site_hover")).create()));
+    
+                    playerEnv.player.spigot().sendMessage(message);
+                }
+            }
+    
+            playerEnv.player.sendMessage(languageManager.getMessage("vote_site_footer"));
+            return true;
+        } 
+        else {return false;}
     }
 }
