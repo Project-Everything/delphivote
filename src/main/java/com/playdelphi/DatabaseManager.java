@@ -128,7 +128,14 @@ public class DatabaseManager {
                 // If mysql, create index on player_uuid for faster lookups in votes table
                 if (tableName.equals("votes")) {
                     if (isMySQL) {
-                        stmt.execute("CREATE INDEX idx_player_uuid ON " + tablePrefix + "_" + tableName + " (player_uuid)");
+                        try {
+                            stmt.execute("CREATE INDEX idx_player_uuid ON " + tablePrefix + "_" + tableName + " (player_uuid)");
+                        } catch (SQLException e) {
+                            // Ignore error if index already exists (MySQL error code 1061)
+                            if (e.getErrorCode() != 1061) {
+                                throw e;
+                            }
+                        }
                     }
                 }
             }
