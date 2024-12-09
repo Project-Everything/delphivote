@@ -14,8 +14,14 @@
 #     site_vote_url:          (required, string. Direct link to the vote page)
 #     site_active:            (optional, true/false, default is true. Conveniently toggle the listing on/off)
 #
-# ================================================================
+#   Example:
 #
+#   planet_minecraft:
+#     site_name: PlanetMinecraft.com
+#     site_vote_url: https://www.planetminecraft.com/server/delphicraft-minecraft-factions-smp-survival-mcmmo-rpg/vote/
+#     site_active: true
+#
+# ================================================================
 planet_minecraft:
   site_name: PlanetMinecraft.com
   site_vote_url: https://www.planetminecraft.com/server/delphicraft-minecraft-factions-smp-survival-mcmmo-rpg/vote/

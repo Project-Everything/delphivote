@@ -27,7 +27,7 @@
 # 
 # Be sure to enclose strings in quotes ('') if they contain special formatting codes such as & or hex colors.
 #
-# Example Rewards:
+# Examples:
 # 
 # diamond_pack:
 #   reward_name: Vote Reward

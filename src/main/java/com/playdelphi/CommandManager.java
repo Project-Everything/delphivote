@@ -61,8 +61,6 @@ public class CommandManager implements CommandExecutor {
             }
     
             switch (args[0]) {
-                case "addplayer":
-                    return handleAddPlayer(playerEnv, args);
                 case "give":
                     if (args.length > 1) {
                         switch (args[1]) {
@@ -143,29 +141,6 @@ public class CommandManager implements CommandExecutor {
         } 
 
         return false;
-    }
-
-    private boolean handleAddPlayer(PlayerEnv playerEnv, String[] args) {
-
-        if (checkPerm(playerEnv, "admin")) {
-
-            if (args.length != 2) {
-                playerEnv.player.sendMessage(languageManager.getMessage("addplayer_usage"));
-                return false;
-            }
-
-            // Get target PlayerEnv
-            String tgt_playerName = args[1];
-            PlayerEnv tgt_playerEnv = playerEnvManager.getPlayerEnv(tgt_playerName);
-
-            // Add player to database
-            databaseManager.addOrUpdatePlayer(tgt_playerEnv);
-            playerEnv.player.sendMessage(languageManager.getMessage("addplayer_success", Map.of("player", tgt_playerEnv.name)));
-            return true;
-
-        } 
-
-        else {return false;}
     }
 
     private boolean handleGiveReward(PlayerEnv playerEnv, String[] args) {

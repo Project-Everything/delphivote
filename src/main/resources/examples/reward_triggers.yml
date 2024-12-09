@@ -29,7 +29,7 @@
 #
 # Be sure to enclose strings in quotes ("") if they contain special formatting codes such as & or hex colors.
 #
-# Example Triggers:
+# Examples:
 # 
 # player_vote:
 #   trigger_name: Standard Player Vote
