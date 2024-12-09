@@ -1,24 +1,15 @@
 package com.playdelphi;
 
 import com.vexsoftware.votifier.model.VotifierEvent;
-import java.util.UUID;
-import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.Plugin;
+import org.bstats.bukkit.Metrics;
+
 
 public class DelphiVote extends JavaPlugin implements Listener {
     private FileConfiguration config;
@@ -28,10 +19,13 @@ public class DelphiVote extends JavaPlugin implements Listener {
     private RewardManager rewardManager;
     private VoteManager voteManager;
     private CommandManager commandManager;
-    private HeadDatabaseAPI headDatabaseAPI;
     private UtilsManager utilsManager;
     private PlayerEnvManager playerEnvManager;
     private YamlManager yamlManager;
+
+    private Object headDatabaseAPI;
+    private boolean headDatabaseEnabled = false;
+
 
     // Getters
     public ConfigManager getConfigManager() {return configManager;}
@@ -40,7 +34,9 @@ public class DelphiVote extends JavaPlugin implements Listener {
     public RewardManager getRewardManager() {return rewardManager;}
     public VoteManager getVoteManager() {return voteManager;}
     public CommandManager getCommandManager() {return commandManager;}
-    public HeadDatabaseAPI getHeadDatabaseAPI() {return headDatabaseAPI;}
+    public Object getHeadDatabaseAPI() {
+        return headDatabaseEnabled ? headDatabaseAPI : null;
+    }
     public UtilsManager getUtilsManager() {return utilsManager;}
     public PlayerEnvManager getPlayerEnvManager() {return playerEnvManager;}
     public YamlManager getYamlManager() {return yamlManager;}
@@ -70,13 +66,7 @@ public class DelphiVote extends JavaPlugin implements Listener {
         languageManager = new LanguageManager(this);
 
         // Initialize HeadDatabaseAPI
-        if (Bukkit.getPluginManager().getPlugin("HeadDatabase") != null) {
-            headDatabaseAPI = new HeadDatabaseAPI();
-            getLogger().info("HeadDatabase detected! Enabling custom head rewards.");
-        } else {
-            headDatabaseAPI = null;
-            getLogger().warning("HeadDatabase plugin not detected. Custom head rewards are disabled.");
-        }
+        setupHeadDatabase();
 
         // Initialize RewardManager
         rewardManager = new RewardManager(this);
@@ -86,6 +76,10 @@ public class DelphiVote extends JavaPlugin implements Listener {
 
         // Register Events
         getServer().getPluginManager().registerEvents(this, this);
+
+        // Start bStats
+        int pluginId = 24111;
+        Metrics metrics = new Metrics(this, pluginId);
         
         // Register CommandManager last
         commandManager = new CommandManager(this);
@@ -147,5 +141,20 @@ public class DelphiVote extends JavaPlugin implements Listener {
     private void startPeriodicTasks() {
         // Expire old rewards daily
         getServer().getScheduler().runTaskTimerAsynchronously(this, rewardManager::expireRewards, 12000L, 728000L); // wait 10 min after startup, run daily (in ticks)
+    }
+
+    private void setupHeadDatabase() {
+        try {
+            Class.forName("me.arcaniax.hdb.api.HeadDatabaseAPI");
+            if (getServer().getPluginManager().getPlugin("HeadDatabase") != null) {
+                Class<?> apiClass = Class.forName("me.arcaniax.hdb.api.HeadDatabaseAPI");
+                headDatabaseAPI = apiClass.getDeclaredConstructor().newInstance();
+                headDatabaseEnabled = true;
+                getLogger().info("HeadDatabase found and enabled!");
+            }
+        } catch (Exception e) {
+            getLogger().info("HeadDatabase plugin not found");
+            headDatabaseEnabled = false;
+        }
     }
 }

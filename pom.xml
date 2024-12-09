@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.playdelphi</groupId>
-    <artifactId>delphivote</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>DelphiVote</artifactId>
+    <version>1.1-SNAPSHOT</version>
 
     <name>DelphiVote</name>
     <description>A Minecraft plugin for vote listening and reward management</description>
@@ -63,7 +63,8 @@
             <version>2.7.2</version>
             <scope>provided</scope>
         </dependency>
-        
+
+        <!-- Votifier -->
         <dependency>
             <groupId>com.github.NuVotifier.NuVotifier</groupId>
             <artifactId>nuvotifier-bukkit</artifactId>
@@ -114,6 +115,14 @@
             <version>3.12.0</version>
         </dependency>
 
+        <!-- bStats -->
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>3.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -144,6 +153,10 @@
                                 <relocation>
                                     <pattern>com.zaxxer.hikari</pattern>
                                     <shadedPattern>com.playdelphi.shaded.com.zaxxer.hikari</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.bstats</pattern>
+                                    <shadedPattern>com.playdelphi.shaded.org.bstats</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

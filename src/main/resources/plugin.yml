@@ -3,6 +3,7 @@ version: '${project.version}'
 main: com.playdelphi.DelphiVote
 api-version: '1.21'
 depend: [Votifier]
+softdepend: [HeadDatabase]
 authors: [Obzidi4n]
 description: A Minecraft plugin for vote listening and reward management
 website: https://www.spigotmc.org/resources/delphivote.119390/

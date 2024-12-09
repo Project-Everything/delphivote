@@ -3,10 +3,7 @@ package com.playdelphi;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import java.io.File;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.lang.String;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +19,6 @@ import java.util.Map;
 import java.util.UUID;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 public class DatabaseManager {
     private final DelphiVote plugin;

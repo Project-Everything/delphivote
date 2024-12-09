@@ -23,7 +23,7 @@ public class RewardManager {
     private ConfigManager configManager;
     private DatabaseManager databaseManager;
     private final LanguageManager languageManager;
-    private final HeadDatabaseAPI headDatabaseAPI;
+    private Object headDatabaseAPI;
     private final PlayerEnvManager playerEnvManager;
     private final Random random;
 
@@ -212,7 +212,7 @@ public class RewardManager {
             // add item block
             if (itemName.startsWith("hdb-") && headDatabaseAPI != null) {
                 String headID = itemName.split("-")[1];
-                item = headDatabaseAPI.getItemHead(headID);
+                item = getHeadItem(headID);
                 if (item == null) {
                     logger.warning("Head with ID " + headID + " could not be found!");
                     continue;
@@ -359,5 +359,20 @@ public class RewardManager {
         String command = itemCommand.replace("{player}", tgt_playerEnv.name);
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
         Bukkit.dispatchCommand(console, command);
+    }
+
+    private ItemStack getHeadItem(String headId) {
+        try {
+            if (headDatabaseAPI != null) {
+                Class<?> apiClass = Class.forName("me.arcaniax.hdb.api.HeadDatabaseAPI");
+                return (ItemStack) apiClass.getMethod("getItemHead", String.class)
+                    .invoke(headDatabaseAPI, headId);
+            }
+            // Return fallback item if HeadDatabase isn't available
+            return new ItemStack(Material.PLAYER_HEAD);
+        } catch (Exception e) {
+            plugin.getLogger().warning("Failed to get head item: " + e.getMessage());
+            return new ItemStack(Material.PLAYER_HEAD);
+        }
     }
 }
