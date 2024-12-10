@@ -25,7 +25,7 @@
 #
 #  {player} - The name of the player who voted
 # 
-# Be sure to enclose strings in quotes ('') if they contain special formatting codes such as & or hex colors.
+# Be sure to enclose strings in quotes ("") if they contain special formatting codes such as & or hex colors.
 #
 # Examples:
 # 
@@ -74,7 +74,7 @@
 #     - A golden apple to keep you healthy.
 #   reward_randomized: true
 #   reward_max_items: 3
-#    
+#
 # ================================================================
 diamond_pack:
   reward_name: Vote Reward
