@@ -36,14 +36,14 @@
 #     title: Vote Diamond
 #     quantity: 1
 #     lore:
-#     - Thank you for voting!
-#     - '&aKeep voting for special rewards!'
+#       - Thank you for voting!
+#       - '&aKeep voting for special rewards!'
 #   - item: AIR
 #     title: Console Command
 #     quantity: 1
 #     commands:
-#     - effect give {player} minecraft:speed 5 1 true
-#     - effect give {player} minecraft:jump_boost 5 1 true
+#       - effect give {player} minecraft:speed 5 1 true
+#       - effect give {player} minecraft:jump_boost 5 1 true
 # server_celebration_pack:
 #   reward_name: Random Rewards for Everyone
 #   reward_items:
@@ -51,27 +51,27 @@
 #     title: Celebration Firework
 #     quantity: 16
 #     lore:
-#     - Let's celebrate our server milestone!
+#       - Let's celebrate our server milestone!
 #   - item: CAKE
 #     title: Celebration Cake
 #     quantity: 1
 #     lore:
-#     - A delicious cake for everyone!
+#       - A delicious cake for everyone!
 #   - item: DIAMOND_SWORD
 #     title: Warrior's Blade
 #     quantity: 1
 #     lore:
-#     - A powerful sword for your battles.
+#       - A powerful sword for your battles.
 #   - item: IRON_PICKAXE
 #     title: Miner's Friend
 #     quantity: 1
 #     lore:
-#     - An enchanted pickaxe for your mining adventures.
+#       - An enchanted pickaxe for your mining adventures.
 #   - item: GOLDEN_APPLE
 #     title: Golden Delight
 #     quantity: 3
 #     lore:
-#     - A golden apple to keep you healthy.
+#       - A golden apple to keep you healthy.
 #   reward_randomized: true
 #   reward_max_items: 3
 #
@@ -83,14 +83,14 @@ diamond_pack:
     title: Vote Diamond
     quantity: 1
     lore:
-    - Thank you for voting!
-    - '&aKeep voting for special rewards!'
+      - Thank you for voting!
+      - '&aKeep voting for special rewards!'
   - item: AIR
     title: Console Command
     quantity: 1
     commands:
-    - effect give {player} minecraft:speed 5 1 true
-    - effect give {player} minecraft:jump_boost 5 1 true
+      - effect give {player} minecraft:speed 5 1 true
+      - effect give {player} minecraft:jump_boost 5 1 true
   reward_randomized: false
   reward_max_items: 0
 welcome_pack:
@@ -100,12 +100,12 @@ welcome_pack:
     title: Welcome Diamond
     quantity: 1
     lore:
-    - A special diamond for your first vote!
+      - A special diamond for your first vote!
   - item: COOKED_BEEF
     title: Hearty Meal
     quantity: 16
     lore:
-    - A delicious steak to start your journey.
+      - A delicious steak to start your journey.
   reward_randomized: false
   reward_max_items: 0
 intermediate_pack:
@@ -115,12 +115,12 @@ intermediate_pack:
     title: Miner's Friend
     quantity: 1
     lore:
-    - An enchanted pickaxe for your mining adventures.
+      - An enchanted pickaxe for your mining adventures.
   - item: GOLDEN_APPLE
     title: Golden Delight
     quantity: 3
     lore:
-    - A golden apple to keep you healthy.
+      - A golden apple to keep you healthy.
   reward_randomized: false
   reward_max_items: 0
 advanced_pack:
@@ -130,17 +130,17 @@ advanced_pack:
     title: Warrior's Blade
     quantity: 1
     lore:
-    - A powerful sword for your battles.
+      - A powerful sword for your battles.
   - item: ENCHANTED_GOLDEN_APPLE
     title: Notch Apple
     quantity: 1
     lore:
-    - The ultimate golden apple.
+      - The ultimate golden apple.
   - item: EXPERIENCE_BOTTLE
     title: Wisdom in a Bottle
     quantity: 16
     lore:
-    - A boost of experience.
+      - A boost of experience.
   reward_randomized: true
   reward_max_items: 2
 server_celebration_pack:
@@ -150,26 +150,26 @@ server_celebration_pack:
     title: Celebration Firework
     quantity: 16
     lore:
-    - Let's celebrate our server milestone!
+      - Let's celebrate our server milestone!
   - item: CAKE
     title: Celebration Cake
     quantity: 1
     lore:
-    - A delicious cake for everyone!
+      - A delicious cake for everyone!
   - item: DIAMOND_SWORD
     title: Warrior's Blade
     quantity: 1
     lore:
-    - A powerful sword for your battles.
+      - A powerful sword for your battles.
   - item: IRON_PICKAXE
     title: Miner's Friend
     quantity: 1
     lore:
-    - An enchanted pickaxe for your mining adventures.
+      - An enchanted pickaxe for your mining adventures.
   - item: GOLDEN_APPLE
     title: Golden Delight
     quantity: 3
     lore:
-    - A golden apple to keep you healthy.
+      - A golden apple to keep you healthy.
   reward_randomized: true
   reward_max_items: 3

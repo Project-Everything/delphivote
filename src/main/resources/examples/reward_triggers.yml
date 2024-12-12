@@ -37,7 +37,7 @@
 #   trigger_threshold: 0
 #   trigger_repeat: true
 #   trigger_rewards:
-#   - diamond_pack
+#     - diamond_pack
 #   trigger_player_message: '&aThanks for voting, {player}! You now have {votes} votes.'
 #   trigger_broadcast_message: '&b{player} just voted on {service} and now has {votes} votes!'
 # server_milestone_100:
@@ -46,7 +46,7 @@
 #   trigger_threshold: 100
 #   trigger_repeat: true
 #   trigger_rewards:
-#   - server_celebration_pack
+#     - server_celebration_pack
 #   trigger_player_message: '&aYou''ve received a Server Celebration reward!'
 #   trigger_broadcast_message: '&aThe server has received another 100 votes! Time to celebrate!'
 #
@@ -57,7 +57,7 @@ player_vote:
   trigger_threshold: 0
   trigger_repeat: true
   trigger_rewards:
-  - diamond_pack
+    - diamond_pack
   trigger_player_message: '&aThanks for voting, {player}! You now have {votes} votes.'
   trigger_broadcast_message: '&b{player} just voted on {service} and now has {votes} votes!'
 first_vote:
@@ -66,7 +66,7 @@ first_vote:
   trigger_threshold: 1
   trigger_repeat: false
   trigger_rewards:
-  - welcome_pack
+    - welcome_pack
   trigger_player_message: '&aThanks for voting, {player}! Check your inventory for a special gift.'
   trigger_broadcast_message: '&a{player} has voted for the first time!'
 fifth_vote:
@@ -75,7 +75,7 @@ fifth_vote:
   trigger_threshold: 5
   trigger_repeat: false
   trigger_rewards:
-  - intermediate_pack
+    - intermediate_pack
   trigger_player_message: '&aThanks for voting 5 times, {player}! Check your inventory for a special gift.'
   trigger_broadcast_message: '&a{player} has voted for the fifth time!'
 tenth_vote:
@@ -84,7 +84,7 @@ tenth_vote:
   trigger_threshold: 10
   trigger_repeat: false
   trigger_rewards:
-  - advanced_pack
+    - advanced_pack
   trigger_player_message: '&aThanks for voting 10 times, {player}! Check your inventory for a special gift.'
   trigger_broadcast_message: '&a{player} has voted for the tenth time!'
 server_milestone_100:
@@ -93,6 +93,6 @@ server_milestone_100:
   trigger_threshold: 100
   trigger_repeat: true
   trigger_rewards:
-  - server_celebration_pack
+    - server_celebration_pack
   trigger_player_message: '&aYou''ve received a Server Celebration reward!'
   trigger_broadcast_message: '&aThe server has received another 100 votes! Time to celebrate!'

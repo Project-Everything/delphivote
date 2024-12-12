@@ -26,6 +26,7 @@ resources:
   - sites.yml
   - reward_items.yml
   - reward_triggers.yml
+  - examples/sites.yml
   - examples/reward_items.yml
   - examples/reward_triggers.yml
   - lang/messages-en.yml

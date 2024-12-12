@@ -87,16 +87,23 @@ public class YamlManager {
         return result;
     }
 
-    // Merge configuration files to preserve local changes
+    // Merge any missing/new required keys while preserving local settings
     private Map<String, Object> mergeConfigurations(Map<String, Object> resourceConfig, Map<String, Object> localConfig) {
         Map<String, Object> mergedConfig = new LinkedHashMap<>();
 
-        // if resource version is empty, use local
-        if (resourceConfig == null) {
-            // logger.warning("resourceConfig is null, using localConfig");
+        // if no localConfig, return resourceConfig (first boot)
+        if (localConfig == null) {          
+            // logger.warning("localConfig doesn't exist, using resourceConfig");  
+            return resourceConfig;
+        }
+
+        // if no resourceConfig, return localConfig (no required keys in resourceConfig)
+        if (resourceConfig == null) {                
+            // logger.warning("resourceConfig is null, using localConfig");  
             return localConfig;
         }
         
+        // merge any missing/new required keys from resourceConfig with localConfig
         for (Map.Entry<String, Object> entry : resourceConfig.entrySet()) {
             String key = entry.getKey();
             Object resourceValue = entry.getValue();
@@ -121,13 +128,18 @@ public class YamlManager {
     // Write final Yaml file to local
     public void saveYaml(Map<String, Object> data, String filePath, String commentBlock) throws IOException {
         try (FileWriter writer = new FileWriter(filePath)) {
+            
+            // write comment block
             writer.write(commentBlock);
             
-            // Convert the map to YAML preserving formatting
-            StringBuilder yamlContent = new StringBuilder();
-            writeMapToYaml(data, yamlContent, 0);
-            
-            writer.write(yamlContent.toString());
+            if (data != null) {
+                // Convert the map to YAML preserving formatting
+                StringBuilder yamlContent = new StringBuilder();
+                writeMapToYaml(data, yamlContent, 0);
+                
+                // write yaml keys
+                writer.write(yamlContent.toString());
+            }
         }
     }
 

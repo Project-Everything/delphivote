@@ -74,12 +74,10 @@ public class ConfigManager {
     // Load local config files, compare to defaults and merge if needed, add to configs map
     private void loadConfig(String configName, String resourceName) {
         File configFile = new File(datafolder, resourceName);
-        // logger.info("Initializing " + configFile.getPath());
 
         // Check if the config file exists, if not, copy the default config from the jar
         if (!configFile.exists()) {
             plugin.saveResource(resourceName, false);
-            // logger.info("Created " + resourceName + " from resource");
         }
 
         // Compare and merge the local config file with the default config from the jar
