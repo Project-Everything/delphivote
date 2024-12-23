@@ -17,6 +17,7 @@
 #      {votes} - O número de votos que o jogador tem
 #      {service} - O nome do site em que o jogador votou
 #      {reward} - O nome da recompensa que o jogador recebeu
+#      %placeholderapi-tag% - Qualquer tag PlaceholderAPI válida
 #
 #   Certifique-se de colocar as strings entre aspas ('') se elas contiverem códigos de formatação especiais como & ou cores hex.
 #

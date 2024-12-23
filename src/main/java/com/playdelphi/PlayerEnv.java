@@ -1,13 +1,12 @@
 package com.playdelphi;
 
-import java.util.logging.Logger;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import me.clip.placeholderapi.PlaceholderAPI;
 
 public class PlayerEnv {
 
-    private Logger logger;
     public Player player;
     public String name;
     public UUID uuid;
@@ -26,4 +25,15 @@ public class PlayerEnv {
         this.name = null; // resolve this later
         this.uuid = uuid;
     }    
+
+    // process player messages
+    public void sendMessage(String message) {
+        if (player != null) {
+            // Process PlaceholderAPI placeholders with player context before sending
+            if (Bukkit.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+                message = PlaceholderAPI.setPlaceholders(player, message);
+            }
+            player.sendMessage(message);
+        }
+    }
 }

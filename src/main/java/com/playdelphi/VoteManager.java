@@ -38,12 +38,12 @@ public class VoteManager {
 
              // Message to initiating player
             if (playerEnv.uuid != tgt_playerEnv.uuid && playerEnv.player != null) {
-                playerEnv.player.sendMessage(languageManager.getMessage("vote_success", Map.of("player", tgt_playerEnv.name, "service", serviceName)));
+                playerEnv.sendMessage(languageManager.getMessage("vote_success", Map.of("player", tgt_playerEnv.name, "service", serviceName)));
             }
 
             // Message to target player
             if (tgt_playerEnv.player != null) { 
-                tgt_playerEnv.player.sendMessage(languageManager.getMessage("vote_success_player", Map.of("service", serviceName)));    
+                tgt_playerEnv.sendMessage(languageManager.getMessage("vote_success_player", Map.of("service", serviceName)));    
             }
 
             // Broadcast to server
@@ -54,7 +54,7 @@ public class VoteManager {
             } catch (Exception e) {
                 logger.severe("Error adding vote: " + e.getMessage()); 
                 if (playerEnv.player != null) {
-                    playerEnv.player.sendMessage(languageManager.getMessage("vote_fail", Map.of("player", tgt_playerEnv.name, "service", serviceName)));
+                    playerEnv.sendMessage(languageManager.getMessage("vote_fail", Map.of("player", tgt_playerEnv.name, "service", serviceName)));
                 }
             }
 

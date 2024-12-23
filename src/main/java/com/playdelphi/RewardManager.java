@@ -166,12 +166,12 @@ public class RewardManager {
                 this.giveReward(playerEnv, tgt_playerEnv, reward, serviceName);
 
                 // send player messages
-                playerEnv.player.sendMessage(languageManager.getMessage("give_reward_success", 
+                playerEnv.sendMessage(languageManager.getMessage("give_reward_success", 
                 Map.of("player", tgt_playerEnv.name,
                     "reward", reward.getString("reward_name"))));
 
                 if (tgt_playerEnv.player != null) {
-                    tgt_playerEnv.player.sendMessage(languageManager.getMessage("give_reward_success_player",
+                    tgt_playerEnv.sendMessage(languageManager.getMessage("give_reward_success_player",
                         Map.of("reward", reward.getString("reward_name"))));
                 }
             } 
@@ -307,18 +307,18 @@ public class RewardManager {
         ConfigurationSection triggerTable = configManager.getTriggerTable();
 
         if (triggerTable == null && playerEnv.player != null) {
-            playerEnv.player.sendMessage(languageManager.getMessage("trigger_list_error"));
+            playerEnv.sendMessage(languageManager.getMessage("trigger_list_error"));
             return;
         }
 
         if (playerEnv.player != null) {
-            playerEnv.player.sendMessage(languageManager.getMessage("trigger_list_header"));
+            playerEnv.sendMessage(languageManager.getMessage("trigger_list_header"));
         }
 
         for (String triggerKey : triggerTable.getKeys(false)) {
             ConfigurationSection trigger = triggerTable.getConfigurationSection(triggerKey);
             if (trigger != null && playerEnv.player != null) {
-                playerEnv.player.sendMessage(languageManager.getMessage("trigger_list_item", 
+                playerEnv.sendMessage(languageManager.getMessage("trigger_list_item", 
                     Map.of("key", triggerKey)));
             }
         }
@@ -329,18 +329,18 @@ public class RewardManager {
         ConfigurationSection rewardTable = configManager.getRewardItemTable();
 
         if (rewardTable == null && playerEnv.player != null) {
-            playerEnv.player.sendMessage(languageManager.getMessage("reward_list_error"));
+            playerEnv.sendMessage(languageManager.getMessage("reward_list_error"));
             return;
         }
 
         if (playerEnv.player != null) {
-            playerEnv.player.sendMessage(languageManager.getMessage("reward_list_header"));
+            playerEnv.sendMessage(languageManager.getMessage("reward_list_header"));
         }
 
         for (String rewardKey : rewardTable.getKeys(false)) {
             ConfigurationSection reward = rewardTable.getConfigurationSection(rewardKey);
             if (reward != null && playerEnv.player != null) {
-                playerEnv.player.sendMessage(languageManager.getMessage("reward_list_item", 
+                playerEnv.sendMessage(languageManager.getMessage("reward_list_item", 
                     Map.of("key", rewardKey)));
             }
         }

@@ -1,9 +1,7 @@
 package com.playdelphi;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Logger;
 import java.util.Map;
 import org.bukkit.ChatColor;
@@ -32,15 +30,14 @@ public class LanguageManager {
         String langPref = configManager.getConfig("config").getString("language", "messages-en.yml");
 
         langConfig = configManager.getConfig("lang_" + langPref);
-        // logger.info("Using language file: " + langPref);
 
         for (String key : langConfig.getKeys(false)) {
             String message = langConfig.getString(key);
             if (message != null) {
-                messages.put(key, ChatColor.translateAlternateColorCodes('&', message));
+                // Store raw message without processing color codes
+                messages.put(key, message);
             }
         }
-        // logger.info("Loaded language file: " + file.getName());
     }
 
     private void createLanguageFile(String fileName) {
@@ -51,23 +48,24 @@ public class LanguageManager {
         }
     }
 
+    // lookup message by key, process color codes
     public String getMessage(String key) {
-        // logger.info("Getting message for key: " + key);
-        return messages.getOrDefault(key, "Message not found: " + key);
-    }
-
-    public String getMessage(String key, Map<String, String> placeholders) {
-        String message = messages.getOrDefault(key, key);
-        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-            message = message.replace("{" + entry.getKey() + "}", entry.getValue());
-        }
+        String message = messages.getOrDefault(key, "Message not found: " + key);
+        // Process color codes after getting the message
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
-    public String formatMessage(String messageKey, String playerName, int voteCount) {
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("player", playerName);
-        placeholders.put("votes", String.valueOf(voteCount));
-        return getMessage(messageKey, placeholders);
+    // override: lookup message by key, insert DelphiVote placeholders, process color codes
+    public String getMessage(String key, Map<String, String> placeholders) {
+        String message = messages.getOrDefault(key, key);
+
+        // process DelphiVote placeholders
+        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+            message = message.replace("{" + entry.getKey() + "}", entry.getValue());
+        }
+        // process color codes
+        message = ChatColor.translateAlternateColorCodes('&', message);
+
+        return message;
     }
 }

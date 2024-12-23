@@ -92,7 +92,7 @@ public class CommandManager implements CommandExecutor {
                 case "expire":
                     return handleExpireRewards(playerEnv);
                 default:
-                    playerEnv.player.sendMessage(languageManager.getMessage("no_command"));
+                    playerEnv.sendMessage(languageManager.getMessage("no_command"));
                     return true;
             }
 
@@ -110,11 +110,12 @@ public class CommandManager implements CommandExecutor {
     }
 
     
-    // method overload
+    // permissions check
     private boolean checkPerm(PlayerEnv playerEnv, String minPerm) {
         return checkPerm(playerEnv, minPerm, false);
     }
 
+    // permissions check with failure alert
     private boolean checkPerm(PlayerEnv playerEnv, String minPerm, boolean failAlert) {
         String fullPerm = "delphivoting." + minPerm;
 
@@ -123,7 +124,7 @@ public class CommandManager implements CommandExecutor {
                 return true;
             } else {
                 if (failAlert){
-                    playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
+                    playerEnv.sendMessage(languageManager.getMessage("no_permission"));
                 }
                 return false;
             }
@@ -134,7 +135,7 @@ public class CommandManager implements CommandExecutor {
                 return true;
             } else {
                 if (failAlert) {
-                    playerEnv.player.sendMessage(languageManager.getMessage("no_permission"));
+                    playerEnv.sendMessage(languageManager.getMessage("no_permission"));
                 }
                 return false;
             }
@@ -143,6 +144,7 @@ public class CommandManager implements CommandExecutor {
         return false;
     }
 
+    // give rewards (admin)
     private boolean handleGiveReward(PlayerEnv playerEnv, String[] args) {
 
         if (checkPerm(playerEnv, "admin")) {
@@ -155,7 +157,7 @@ public class CommandManager implements CommandExecutor {
                 rewardName = args[2];
                 tgt_playerName = args[3];
             } else {
-                playerEnv.player.sendMessage(languageManager.getMessage("admin_trigger_fail"));
+                playerEnv.sendMessage(languageManager.getMessage("admin_trigger_fail"));
                 return false;
             }
     
@@ -170,7 +172,7 @@ public class CommandManager implements CommandExecutor {
         else {return false;}
     }
 
-
+    // give votes (admin)
     private boolean handleGiveVote(PlayerEnv playerEnv, String[] args) {
 
         if (checkPerm(playerEnv, "admin")) {
@@ -182,7 +184,7 @@ public class CommandManager implements CommandExecutor {
             if (args.length > 2) {
                 tgt_playerName = args[2];
             } else {
-                playerEnv.player.sendMessage(languageManager.getMessage("give_vote_fail"));
+                playerEnv.sendMessage(languageManager.getMessage("give_vote_fail"));
                 return false;
             }
             
@@ -196,6 +198,7 @@ public class CommandManager implements CommandExecutor {
         else {return false;}
     }
 
+    // manually expire old rewards (admin)
     private boolean handleExpireRewards(PlayerEnv playerEnv) {
 
         if (checkPerm(playerEnv, "admin")) {
@@ -207,28 +210,30 @@ public class CommandManager implements CommandExecutor {
         else {return false;}
     }
 
+    // see help menu
     private boolean handleHelp(PlayerEnv playerEnv) {
-        playerEnv.player.sendMessage(languageManager.getMessage("help_header"));
+        playerEnv.sendMessage(languageManager.getMessage("help_header"));
 
         if (checkPerm(playerEnv, "player")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("help_vote"));
-            playerEnv.player.sendMessage(languageManager.getMessage("help_stats"));
-            playerEnv.player.sendMessage(languageManager.getMessage("help_stats_player"));
+            playerEnv.sendMessage(languageManager.getMessage("help_vote"));
+            playerEnv.sendMessage(languageManager.getMessage("help_stats"));
+            playerEnv.sendMessage(languageManager.getMessage("help_stats_player"));
         }
 
         if (checkPerm(playerEnv, "admin")) {
-            playerEnv.player.sendMessage(languageManager.getMessage("help_info"));
-            playerEnv.player.sendMessage(languageManager.getMessage("help_list_rewards"));
-            playerEnv.player.sendMessage(languageManager.getMessage("help_give_reward"));
-            playerEnv.player.sendMessage(languageManager.getMessage("help_give_vote"));
-            playerEnv.player.sendMessage(languageManager.getMessage("help_reload"));
-            playerEnv.player.sendMessage(languageManager.getMessage("help_addplayer"));
+            playerEnv.sendMessage(languageManager.getMessage("help_info"));
+            playerEnv.sendMessage(languageManager.getMessage("help_list_rewards"));
+            playerEnv.sendMessage(languageManager.getMessage("help_give_reward"));
+            playerEnv.sendMessage(languageManager.getMessage("help_give_vote"));
+            playerEnv.sendMessage(languageManager.getMessage("help_reload"));
+            playerEnv.sendMessage(languageManager.getMessage("help_addplayer"));
         }
 
-        playerEnv.player.sendMessage(languageManager.getMessage("help_footer"));
+        playerEnv.sendMessage(languageManager.getMessage("help_footer"));
         return true;
     }
 
+    // see plugin info (admin)
     private boolean handleInfo(PlayerEnv playerEnv) {
 
         if (checkPerm(playerEnv, "admin")) {
@@ -240,18 +245,19 @@ public class CommandManager implements CommandExecutor {
 
             urlMessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(languageManager.getMessage("plugin_info_url_hover"))));
 
-            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_header"));
-            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_name", Map.of("name", plugin.getDescription().getName())));
-            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_version", Map.of("version", plugin.getDescription().getVersion())));
-            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_author", Map.of("author", String.join(", ", plugin.getDescription().getAuthors()))));
+            playerEnv.sendMessage(languageManager.getMessage("plugin_info_header"));
+            playerEnv.sendMessage(languageManager.getMessage("plugin_info_name", Map.of("name", plugin.getDescription().getName())));
+            playerEnv.sendMessage(languageManager.getMessage("plugin_info_version", Map.of("version", plugin.getDescription().getVersion())));
+            playerEnv.sendMessage(languageManager.getMessage("plugin_info_author", Map.of("author", String.join(", ", plugin.getDescription().getAuthors()))));
             playerEnv.player.spigot().sendMessage(urlMessage);
-            playerEnv.player.sendMessage(languageManager.getMessage("plugin_info_footer"));
+            playerEnv.sendMessage(languageManager.getMessage("plugin_info_footer"));
             return true;
 
         } 
         else {return false;}
     }
 
+    // list playerEnvs (admin)
     private boolean handleListPlayerEnvs(PlayerEnv playerEnv) {
 
         if (checkPerm(playerEnv, "admin")) {
@@ -262,6 +268,7 @@ public class CommandManager implements CommandExecutor {
         else {return false;}
     }
 
+    // list players (admin)
     private boolean handleListPlayers(PlayerEnv playerEnv) {
 
         if (checkPerm(playerEnv, "admin")) {
@@ -273,6 +280,7 @@ public class CommandManager implements CommandExecutor {
         else {return false;}
     }
 
+    // list configured rewards (admin)
     private boolean handleListRewards(PlayerEnv playerEnv) {
 
         if (checkPerm(playerEnv, "admin")) {
@@ -284,6 +292,7 @@ public class CommandManager implements CommandExecutor {
         else {return false;}
     }
 
+    // list configured triggers (admin)
     private boolean handleListTriggers(PlayerEnv playerEnv) {
 
         if (checkPerm(playerEnv, "admin")) {
@@ -294,6 +303,7 @@ public class CommandManager implements CommandExecutor {
         else {return false;}
     }
 
+    // reload plugin configs (admin)
     private boolean handleReload(PlayerEnv playerEnv) {
 
         if (checkPerm(playerEnv, "admin")) {
@@ -301,32 +311,33 @@ public class CommandManager implements CommandExecutor {
             plugin.reloadConfig();
             configManager.loadConfigs();
             languageManager.loadLanguageConfigs();
-            playerEnv.player.sendMessage(languageManager.getMessage("plugin_reload_true"));
+            playerEnv.sendMessage(languageManager.getMessage("plugin_reload_true"));
             return true;
         } 
         else {return false;}
     }
 
+    // see player vote stats
     private boolean handleStats(PlayerEnv playerEnv, String[] args) {
 
         if (checkPerm(playerEnv, "player")) {
     
             if (args.length == 1) {
-                playerEnv.player.sendMessage(languageManager.getMessage("top_voters_header"));
+                playerEnv.sendMessage(languageManager.getMessage("top_voters_header"));
     
                 // total vote count message
                 int totalVotes = databaseManager.getServerVoteCount();
-                playerEnv.player.sendMessage(languageManager.getMessage("total_server_votes", Map.of("total_votes", String.valueOf(totalVotes))));
+                playerEnv.sendMessage(languageManager.getMessage("total_server_votes", Map.of("total_votes", String.valueOf(totalVotes))));
     
                 // top 10 voters
                 List<Map.Entry<String, Integer>> topVoters = databaseManager.getTopVoters(10);
                 int rank = 1;
                 for (Map.Entry<String, Integer> entry : topVoters) {
-                    playerEnv.player.sendMessage(languageManager.getMessage("top_voter_item", Map.of("rank", String.valueOf(rank), "player", entry.getKey(), "votes", String.valueOf(entry.getValue()))));
+                    playerEnv.sendMessage(languageManager.getMessage("top_voter_item", Map.of("rank", String.valueOf(rank), "player", entry.getKey(), "votes", String.valueOf(entry.getValue()))));
                     rank++;
                 }
-                playerEnv.player.sendMessage(languageManager.getMessage("top_voters_last_item"));
-                playerEnv.player.sendMessage(languageManager.getMessage("top_voters_footer"));
+                playerEnv.sendMessage(languageManager.getMessage("top_voters_last_item"));
+                playerEnv.sendMessage(languageManager.getMessage("top_voters_footer"));
             } else {
                 // Show stats for a specific player
                 String tgt_playerName = args[1];
@@ -336,31 +347,32 @@ public class CommandManager implements CommandExecutor {
     
                 Map<String, Object> playerStats = databaseManager.getPlayerVoteStats(tgt_playerEnv);
                 if (playerStats != null) {
-                    playerEnv.player.sendMessage(languageManager.getMessage("player_stats_header", Map.of("player", tgt_playerEnv.name)));
-                    playerEnv.player.sendMessage(languageManager.getMessage("player_stats_votes", Map.of("votes", String.valueOf(playerStats.get("totalVotes")))));
+                    playerEnv.sendMessage(languageManager.getMessage("player_stats_header", Map.of("player", tgt_playerEnv.name)));
+                    playerEnv.sendMessage(languageManager.getMessage("player_stats_votes", Map.of("votes", String.valueOf(playerStats.get("totalVotes")))));
                     if (playerStats.get("lastVoteDate") != null) {
-                        playerEnv.player.sendMessage(languageManager.getMessage("player_stats_last_vote", Map.of("last_vote", String.valueOf(playerStats.get("lastVoteDate")))));
+                        playerEnv.sendMessage(languageManager.getMessage("player_stats_last_vote", Map.of("last_vote", String.valueOf(playerStats.get("lastVoteDate")))));
                     }
                 } else {
-                    playerEnv.player.sendMessage(languageManager.getMessage("player_not_found", Map.of("player", tgt_playerEnv.name)));
+                    playerEnv.sendMessage(languageManager.getMessage("player_not_found", Map.of("player", tgt_playerEnv.name)));
                 }
-                playerEnv.player.sendMessage(languageManager.getMessage("player_stats_footer"));
+                playerEnv.sendMessage(languageManager.getMessage("player_stats_footer"));
             }
             return true;
         } 
         else {return false;}
     }
 
+    // list vote sites
     private boolean handleVoteList(PlayerEnv playerEnv) {
 
         if (checkPerm(playerEnv, "player")) {
     
-            playerEnv.player.sendMessage(languageManager.getMessage("vote_site_header"));
-            playerEnv.player.sendMessage(languageManager.getMessage("vote_site_first_item"));
+            playerEnv.sendMessage(languageManager.getMessage("vote_site_header"));
+            playerEnv.sendMessage(languageManager.getMessage("vote_site_first_item"));
     
             ConfigurationSection sitesConfig = configManager.getConfig("sites");
             if (sitesConfig == null || sitesConfig.getKeys(false).isEmpty()) {
-                playerEnv.player.sendMessage(languageManager.getMessage("no_vote_sites"));
+                playerEnv.sendMessage(languageManager.getMessage("no_vote_sites"));
                 return false;
             }
     
@@ -378,7 +390,7 @@ public class CommandManager implements CommandExecutor {
                 }
             }
     
-            playerEnv.player.sendMessage(languageManager.getMessage("vote_site_footer"));
+            playerEnv.sendMessage(languageManager.getMessage("vote_site_footer"));
             return true;
         } 
         else {return false;}

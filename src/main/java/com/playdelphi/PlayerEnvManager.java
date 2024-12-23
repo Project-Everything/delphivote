@@ -1,7 +1,6 @@
 package com.playdelphi;
 
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.List;
 import java.util.logging.Logger;
 import java.util.UUID;
 import org.bukkit.entity.Player;

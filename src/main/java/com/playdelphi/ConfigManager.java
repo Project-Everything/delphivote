@@ -2,19 +2,13 @@ package com.playdelphi;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.HashMap;
 import java.util.logging.Logger;
 import java.util.Map;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.yaml.snakeyaml.constructor.Constructor;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.representer.Representer;
-import org.yaml.snakeyaml.Yaml;
 
 public class ConfigManager {
     private final DelphiVote plugin;
