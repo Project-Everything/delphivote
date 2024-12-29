@@ -15,7 +15,7 @@ commands:
 permissions:
   delphivote.player:
     description: Allows access to basic voting commands
-    default: true
+    default: false
   delphivote.admin:
     description: Allows access to all DelphiVote admin commands
     default: op

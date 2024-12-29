@@ -147,7 +147,7 @@ public class CommandManager implements CommandExecutor {
     // give rewards (admin)
     private boolean handleGiveReward(PlayerEnv playerEnv, String[] args) {
 
-        if (checkPerm(playerEnv, "admin")) {
+        if (checkPerm(playerEnv, "admin", true)) {
     
             String tgt_playerName;
             String rewardName;
@@ -175,7 +175,7 @@ public class CommandManager implements CommandExecutor {
     // give votes (admin)
     private boolean handleGiveVote(PlayerEnv playerEnv, String[] args) {
 
-        if (checkPerm(playerEnv, "admin")) {
+        if (checkPerm(playerEnv, "admin", true)) {
 
             // Get target playerEnv
             String tgt_playerName;
@@ -201,7 +201,7 @@ public class CommandManager implements CommandExecutor {
     // manually expire old rewards (admin)
     private boolean handleExpireRewards(PlayerEnv playerEnv) {
 
-        if (checkPerm(playerEnv, "admin")) {
+        if (checkPerm(playerEnv, "admin", true)) {
 
             rewardManager.expireRewards();
             return true;
@@ -236,7 +236,7 @@ public class CommandManager implements CommandExecutor {
     // see plugin info (admin)
     private boolean handleInfo(PlayerEnv playerEnv) {
 
-        if (checkPerm(playerEnv, "admin")) {
+        if (checkPerm(playerEnv, "admin", true)) {
 
             String pluginUrl = plugin.getDescription().getWebsite();
             TextComponent urlMessage = new TextComponent(languageManager.getMessage("plugin_info_url", Map.of("url", pluginUrl)));
@@ -260,7 +260,7 @@ public class CommandManager implements CommandExecutor {
     // list playerEnvs (admin)
     private boolean handleListPlayerEnvs(PlayerEnv playerEnv) {
 
-        if (checkPerm(playerEnv, "admin")) {
+        if (checkPerm(playerEnv, "admin", true)) {
 
             playerEnvManager.listActivePlayerEnvs();
             return true;
@@ -271,7 +271,7 @@ public class CommandManager implements CommandExecutor {
     // list players (admin)
     private boolean handleListPlayers(PlayerEnv playerEnv) {
 
-        if (checkPerm(playerEnv, "admin")) {
+        if (checkPerm(playerEnv, "admin", true)) {
     
             List<UUID> allPlayers = databaseManager.getAllPlayersUUID();
             logger.info("All Player UUIDs: " + allPlayers.toString());
@@ -283,7 +283,7 @@ public class CommandManager implements CommandExecutor {
     // list configured rewards (admin)
     private boolean handleListRewards(PlayerEnv playerEnv) {
 
-        if (checkPerm(playerEnv, "admin")) {
+        if (checkPerm(playerEnv, "admin", true)) {
 
             rewardManager.listRewards(playerEnv);
             return true;
@@ -295,7 +295,7 @@ public class CommandManager implements CommandExecutor {
     // list configured triggers (admin)
     private boolean handleListTriggers(PlayerEnv playerEnv) {
 
-        if (checkPerm(playerEnv, "admin")) {
+        if (checkPerm(playerEnv, "admin", true)) {
 
             rewardManager.listTriggers(playerEnv);
             return true;
@@ -306,7 +306,7 @@ public class CommandManager implements CommandExecutor {
     // reload plugin configs (admin)
     private boolean handleReload(PlayerEnv playerEnv) {
 
-        if (checkPerm(playerEnv, "admin")) {
+        if (checkPerm(playerEnv, "admin", true)) {
     
             plugin.reloadConfig();
             configManager.loadConfigs();
@@ -320,7 +320,7 @@ public class CommandManager implements CommandExecutor {
     // see player vote stats
     private boolean handleStats(PlayerEnv playerEnv, String[] args) {
 
-        if (checkPerm(playerEnv, "player")) {
+        if (checkPerm(playerEnv, "player", true)) {
     
             if (args.length == 1) {
                 playerEnv.sendMessage(languageManager.getMessage("top_voters_header"));
@@ -365,7 +365,7 @@ public class CommandManager implements CommandExecutor {
     // list vote sites
     private boolean handleVoteList(PlayerEnv playerEnv) {
 
-        if (checkPerm(playerEnv, "player")) {
+        if (checkPerm(playerEnv, "player", true)) {
     
             playerEnv.sendMessage(languageManager.getMessage("vote_site_header"));
             playerEnv.sendMessage(languageManager.getMessage("vote_site_first_item"));
