@@ -6,7 +6,7 @@
 
     <groupId>com.playdelphi</groupId>
     <artifactId>DelphiVote</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
 
     <name>DelphiVote</name>
     <description>A Minecraft plugin for vote listening and reward management</description>

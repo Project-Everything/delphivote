@@ -117,7 +117,7 @@ public class CommandManager implements CommandExecutor {
 
     // permissions check with failure alert
     private boolean checkPerm(PlayerEnv playerEnv, String minPerm, boolean failAlert) {
-        String fullPerm = "delphivoting." + minPerm;
+        String fullPerm = "delphivote." + minPerm;
 
         if (minPerm == "admin") {
             if (playerEnv.player.hasPermission(fullPerm)) {
@@ -131,7 +131,7 @@ public class CommandManager implements CommandExecutor {
         } 
         
         else if (minPerm == "player") {
-            if (playerEnv.player.hasPermission(fullPerm) || playerEnv.player.hasPermission("delphivoting.admin")) {
+            if (playerEnv.player.hasPermission(fullPerm) || playerEnv.player.hasPermission("delphivote.admin")) {
                 return true;
             } else {
                 if (failAlert) {
