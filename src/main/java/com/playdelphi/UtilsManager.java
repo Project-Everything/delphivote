@@ -26,7 +26,7 @@ public class UtilsManager {
     throws PlayerNotFoundException {
         try {
 
-            URL url = new URL("https://api.mojang.com/users/profiles/minecraft/" + playerName);
+            URL url = new URL("https://api.minecraftservices.com/minecraft/profile/lookup/name/" + playerName);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
