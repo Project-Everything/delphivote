@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class PlayerEnvManager {
 
     private final DelphiVote plugin;
-    private Logger logger;
+    private final Logger logger;
     private static ConcurrentHashMap<UUID, PlayerEnv> playerEnvMap;
 
     // Constructor

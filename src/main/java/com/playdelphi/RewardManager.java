@@ -7,23 +7,21 @@ import java.util.logging.Logger;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.Material;
 
 public class RewardManager {
     private final DelphiVote plugin;
-    private Logger logger;
-    private ConfigManager configManager;
-    private DatabaseManager databaseManager;
+    private final Logger logger;
+    private final ConfigManager configManager;
+    private final DatabaseManager databaseManager;
     private final LanguageManager languageManager;
-    private Object headDatabaseAPI;
+    private final Object headDatabaseAPI;
     private final PlayerEnvManager playerEnvManager;
     private final Random random;
 
@@ -53,6 +51,8 @@ public class RewardManager {
             ConfigurationSection trigger = triggerTable.getConfigurationSection(triggerKey);
             // logger.info("evaluating trigger " + triggerKey);
 
+            assert trigger != null;
+
             if (evaluateTrigger(trigger, playerVoteCount, serverVoteCount)) {
                 // logger.info("executing trigger " + triggerKey);
                 executeTrigger(playerEnv, tgt_playerEnv, trigger, playerVoteCount, serviceName);
@@ -61,7 +61,7 @@ public class RewardManager {
     }
 
     private boolean evaluateTrigger(ConfigurationSection trigger, int playerVoteCount, int serverVoteCount) {
-        String triggerName = trigger.getString("trigger_name");
+        // String triggerName = trigger.getString("trigger_name");
         String triggerUser = trigger.getString("trigger_user");
         int triggerThreshold = trigger.getInt("trigger_threshold", 0);
         boolean triggerRepeat = trigger.getBoolean("trigger_repeat", true);
@@ -72,6 +72,8 @@ public class RewardManager {
         }
 
         // fire if threshold / repeat is met
+        assert triggerUser != null;
+
         if (triggerUser.equals("player")) {
             if (triggerRepeat) {
                 return playerVoteCount % triggerThreshold == 0;
@@ -95,6 +97,8 @@ public class RewardManager {
         String playerMessage = trigger.getString("trigger_player_message");
         String broadcastMessage = trigger.getString("trigger_broadcast_message");
 
+        assert triggerUser != null;
+
         if (triggerUser.equals("player")) {
 
             // give rewards for this trigger
@@ -105,7 +109,7 @@ public class RewardManager {
                 }
             }
             
-            // send broadcastmessage for this trigger
+            // send broadcast message for this trigger
             if (!serviceName.equals("Admin")) {
                 plugin.getServer().broadcastMessage(formatTriggerMessage(broadcastMessage, tgt_playerEnv.name, voteCount, serviceName));
             }
@@ -145,7 +149,7 @@ public class RewardManager {
                 }
             }
 
-            // send broadcastmessage for this trigger
+            // send broadcast message for this trigger
             plugin.getServer().broadcastMessage(formatTriggerMessage(broadcastMessage, playerEnv.name, voteCount, serviceName));
         }
     }
@@ -315,6 +319,8 @@ public class RewardManager {
             playerEnv.sendMessage(languageManager.getMessage("trigger_list_header"));
         }
 
+        assert triggerTable != null;
+
         for (String triggerKey : triggerTable.getKeys(false)) {
             ConfigurationSection trigger = triggerTable.getConfigurationSection(triggerKey);
             if (trigger != null && playerEnv.player != null) {
@@ -336,6 +342,8 @@ public class RewardManager {
         if (playerEnv.player != null) {
             playerEnv.sendMessage(languageManager.getMessage("reward_list_header"));
         }
+
+        assert rewardTable != null;
 
         for (String rewardKey : rewardTable.getKeys(false)) {
             ConfigurationSection reward = rewardTable.getConfigurationSection(rewardKey);

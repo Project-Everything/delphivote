@@ -2,17 +2,13 @@ package com.playdelphi;
 
 import java.util.logging.Logger;
 import java.util.Map;
-import java.util.UUID;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 public class VoteManager {
     private final DelphiVote plugin;
-    private Logger logger;
+    private final Logger logger;
     private final LanguageManager languageManager;
     private final DatabaseManager databaseManager;
     private final RewardManager rewardManager;
-    private final PlayerEnvManager playerEnvManager;
 
     // Constructor
     public VoteManager(DelphiVote plugin) {
@@ -21,7 +17,6 @@ public class VoteManager {
         this.languageManager = plugin.getLanguageManager();
         this.logger = plugin.getLogger();
 		this.rewardManager = plugin.getRewardManager();
-        this.playerEnvManager = plugin.getPlayerEnvManager();
     }
 
     public void handleVote(PlayerEnv playerEnv, PlayerEnv tgt_playerEnv, String serviceName) {
