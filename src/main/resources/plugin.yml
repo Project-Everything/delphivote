@@ -2,16 +2,16 @@ name: DelphiVote
 version: '${project.version}'
 main: com.playdelphi.DelphiVote
 api-version: '1.21'
-depend: [Votifier]
-softdepend: ['HeadDatabase', 'PlaceholderAPI']
-authors: [Obzidi4n]
+depend: [ VotifierPlus ]
+softdepend: [ 'HeadDatabase', 'PlaceholderAPI' ]
+authors: [ Obzidi4n ]
 description: A Minecraft plugin for vote listening and reward management
 website: https://www.spigotmc.org/resources/delphivote.119390/
 commands:
   vote:
     description: Main command for DelphiVote plugin
     usage: /<command> [subcommand]
-    aliases: [dv]
+    aliases: [ dv ]
 permissions:
   delphivote.player:
     description: Allows access to basic voting commands
