@@ -2,34 +2,30 @@ package com.playdelphi;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class LanguageManager {
     private final DelphiVote plugin;
-	private File datafolder;
-	private Logger logger;
-    private YamlConfiguration langConfig;
-    private ConfigManager configManager;
+	private final File dataFolder;
+    private final ConfigManager configManager;
     private final Map<String, String> messages = new HashMap<>();
 
     public LanguageManager(DelphiVote plugin) {
         this.plugin = plugin;
-        this.logger = plugin.getLogger();
-        this.datafolder = plugin.getDataFolder();
+        this.dataFolder = plugin.getDataFolder();
         this.configManager = plugin.getConfigManager();
         loadLanguageConfigs();
     }
 
     public void loadLanguageConfigs() {
-        File langFolder = new File(datafolder, "lang");
+        // File langFolder = new File(dataFolder, "lang");
         
         // Get preferred language from config, default to English if not set
         String langPref = configManager.getConfig("config").getString("language", "messages-en.yml");
 
-        langConfig = configManager.getConfig("lang_" + langPref);
+        YamlConfiguration langConfig = configManager.getConfig("lang_" + langPref);
 
         for (String key : langConfig.getKeys(false)) {
             String message = langConfig.getString(key);
@@ -41,7 +37,7 @@ public class LanguageManager {
     }
 
     private void createLanguageFile(String fileName) {
-        File file = new File(datafolder + File.separator + fileName);
+        File file = new File(dataFolder + File.separator + fileName);
         if (!file.exists()) {
             plugin.saveResource(fileName, false);
             // logger.info("Created language file: " + fileName);
